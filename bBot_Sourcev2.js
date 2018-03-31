@@ -487,7 +487,7 @@ API.on(API.ADVANCE, adv => {
             roletaintervalMessages: [],
             messageInterval: 5,
             songstats: true,
-            commandLiteral: ["!", "/"],
+            commandLiteral: "!",
             slotFruits: [":apple:", ":pear:", ":lemon:", ":cherries:"],
             blacklists: {
                 NSFW: "https://rawgit.com/basicBot/custom/master/blacklists/NSFWlist.json",
