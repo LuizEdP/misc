@@ -1333,7 +1333,7 @@ API.on(API.ADVANCE, adv => {
             var format = obj.media.format;
             var cid = obj.media.cid;
             clearTimeout(historySkip);
-            if (basicBot.settings.historySkip) {
+            if (basicBot.settings.historySkip && API.getWaitList().length > 0) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
