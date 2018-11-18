@@ -4,9 +4,13 @@
 
 ._59ap ._6m3 {
     height: auto !important;
-    max-height: auto !important;
+    max-height: none !important;
 }
 
 ._3n1j ._6m6, ._3n1j ._6m7 {
     display: block !important;
+}
+
+._3n1j ._3n1k {
+    max-height: none !important;
 }
