@@ -1366,12 +1366,12 @@ API.on(API.ADVANCE, adv => {
                 user.ownSong = false;
             }
             clearTimeout(basicBot.room.autoskipTimer);
-            if (basicBot.settings.autoskip) {
+            if (obj.media && basicBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
-                var startcid = API.getMedia().cid;
+                var startcid = obj.media.cid;
                 basicBot.room.autoskipTimer = setTimeout(function() {
-                    var endcid = API.getMedia().cid;
-                    if (startcid === endcid) {
+		    var m = API.getMedia();	
+                    if (m && startcid === m.cid) {
                         //API.sendChat('Song stuck, skipping...');
                         API.moderateForceSkip();
                     }
