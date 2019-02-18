@@ -1264,16 +1264,18 @@ API.on(API.ADVANCE, adv => {
                 $("#woot").click(); // autowoot
             }
 
-            var user = basicBot.userUtilities.lookupUser(obj.dj.id)
-            for (var i = 0; i < basicBot.room.users.length; i++) {
-                if (basicBot.room.users[i].id === user.id) {
-                    basicBot.room.users[i].lastDC = {
-                        time: null,
-                        position: null,
-                        songCount: 0
-                    };
-                }
-            }
+			if (obj.dj) {
+				var user = basicBot.userUtilities.lookupUser(obj.dj.id)
+				for (var i = 0; i < basicBot.room.users.length; i++) {
+					if (basicBot.room.users[i].id === user.id) {
+						basicBot.room.users[i].lastDC = {
+							time: null,
+							position: null,
+							songCount: 0
+						};
+					}
+				}
+			}
 
             var lastplay = obj.lastPlay;
             if (typeof lastplay === 'undefined') return;
@@ -1296,7 +1298,7 @@ API.on(API.ADVANCE, adv => {
             basicBot.room.roomstats.songCount++;
             basicBot.roomUtilities.intervalMessage();
             basicBot.roomUtilities.roletaintervalMessage();
-            basicBot.room.currentDJID = obj.dj.id;
+            basicBot.room.currentDJID = (obj.dj ? obj.dj.id : 0);
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
@@ -1317,7 +1319,7 @@ API.on(API.ADVANCE, adv => {
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (basicBot.settings.timeGuard && newMedia.duration > basicBot.settings.maximumSongLength * 60 && !basicBot.room.roomevent) {
+                if (obj.dj && basicBot.settings.timeGuard && newMedia.duration > basicBot.settings.maximumSongLength * 60 && !basicBot.room.roomevent) {
                     var name = obj.dj.username;
                     API.sendChat(subChat(basicBot.chat.timelimit, {
                         name: name,
@@ -1333,7 +1335,7 @@ API.on(API.ADVANCE, adv => {
             var format = obj.media.format;
             var cid = obj.media.cid;
             clearTimeout(historySkip);
-            if (basicBot.settings.historySkip && API.getWaitList().length > 0) {
+            if (obj.dj && basicBot.settings.historySkip && API.getWaitList().length > 0) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
